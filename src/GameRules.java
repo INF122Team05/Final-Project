@@ -24,6 +24,6 @@ public class GameRules {
     }
 
     public void setDescription(String newDescription){
-        this.description = newDescription
+        this.description = newDescription;
     }
 }

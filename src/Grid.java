@@ -1,27 +1,16 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.text.MessageFormat;
-import java.util.Arrays;
 import java.awt.event.ActionEvent;
-import java.awt.Panel;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.util.HashMap;
 import javax.swing.border.LineBorder;
-import javax.swing.JButton;
-import javax.swing.text.AbstractDocument;
 
 // Needed to have a fixed dimension based on the game type
 // Num representing the Game
 // Based on the Game, Generating Different size of Grid
 // Bejeweled & Candy Crush are similar
-public class GridClass extends JFrame {
+public class Grid extends JFrame {
 
     // Global Variable
     private JPanel contentPane;
@@ -31,7 +20,7 @@ public class GridClass extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    GridClass frame = new GridClass();
+                    Grid frame = new Grid();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -52,7 +41,7 @@ public class GridClass extends JFrame {
         );
         pack();
     }
-    public GridClass() {
+    public Grid() {
         setFont(new Font("Sylfaen", Font.BOLD, 16));
         setTitle("TMGE");
         setBackground(new Color(152, 251, 152));
@@ -150,7 +139,7 @@ public class GridClass extends JFrame {
             @Override
             public void run() {
                 try {
-                    GridClass frame = new GridClass();
+                    Grid frame = new Grid();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

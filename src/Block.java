@@ -1,4 +1,4 @@
-public class BlockClass {
+public class Block {
 	private String color;
 	private int length;
 	private int width;
@@ -6,7 +6,7 @@ public class BlockClass {
 	private int row;
 	private int col;
 
-	public BlockClass(String color, int length, int width, Image blockImage, int row, int col){
+	public Block(String color, int length, int width, Image blockImage, int row, int col){
 		this.color = color;
 		this.length = length;
 		this.width = width;
