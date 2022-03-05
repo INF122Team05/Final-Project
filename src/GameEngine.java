@@ -11,11 +11,12 @@ public abstract class GameEngine extends Thread {
 
     public GameEngine(GameRules rules){
         grid = new Grid();
-        timer = new Timer(rules.getTotalTime());
+        timer = new Timer();
+        timer.setTime(rules.getTotalTime());
 
         gameDescription = rules.getDescription();
-        firstSelection = null;
-        secondSelection = null;
+        firstSelection = "";
+        secondSelection = "";
     }
 
     /** This method builds the GUI of the game **/
@@ -40,11 +41,11 @@ public abstract class GameEngine extends Thread {
     public boolean runGame(){
         String input = "";
         Scanner sc = new Scanner(System.in);
-        timer.countdown();
+        timer.countDown();
 
-        while(timer.getTime() != 0){
+        while(timer.getTimeRemaining() != 0){
             // Check if there is input
-            if (sc.hasNext() && firstSelection.equals(null)){
+            if (sc.hasNext() && firstSelection.isEmpty()){
                 // User provides input: Potentially (x,y) coordinate on grid of block they select first
                 input = sc.nextLine();
 
@@ -53,14 +54,14 @@ public abstract class GameEngine extends Thread {
                     firstSelection = input;
                 }
             }
-            else if (sc.hasNext() && !firstSelection.equals(null)){
+            else if (sc.hasNext()){
                 input = sc.nextLine();
 
                 if (verifyMove(input)){
                     secondSelection = input;
                     checkAndMakeMove();
-                    firstSelection = null;
-                    secondSelection = null;
+                    firstSelection = "";
+                    secondSelection = "";
                 }
             }
             else if (checkGameStatus()){
