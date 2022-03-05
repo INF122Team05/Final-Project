@@ -29,3 +29,4 @@ public class GameManager {
 	public void addGame(Game game) {
 		this.games.add(game);
 	}
+}
