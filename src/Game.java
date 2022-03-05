@@ -1,12 +1,12 @@
 import java.util.Timer;
 
-public class GameClass {
+public class Game {
 
     private String name; 
     private int score;
     private Timer timer = new Timer(); 
 
-    public GameClass(){
+    public Game(){
 
     }
 
