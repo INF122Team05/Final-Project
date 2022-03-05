@@ -29,7 +29,3 @@ public class Game {
     public Timer getTimer(){
         return this.timer; 
     }
-
-
-     
-}
