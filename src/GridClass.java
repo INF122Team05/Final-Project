@@ -6,11 +6,13 @@ import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.Panel;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.HashMap;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.text.AbstractDocument;
@@ -52,7 +54,7 @@ public class GridClass extends JFrame {
     }
     public GridClass() {
         setFont(new Font("Sylfaen", Font.BOLD, 16));
-        setTitle("Connect Four");
+        setTitle("TMGE");
         setBackground(new Color(152, 251, 152));
         initComponentss();
     }
@@ -60,7 +62,7 @@ public class GridClass extends JFrame {
 
     private void initComponentss() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1380, 897);
+        setBounds(100, 100, 1080, 897);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -78,153 +80,66 @@ public class GridClass extends JFrame {
         lblNewLabel.setBackground(new Color(255, 215, 0));
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Sylfaen", Font.BOLD, 17));
-        lblNewLabel.setBounds(1108, 0, 222, 32);
+        lblNewLabel.setBounds(858, 0, 222, 32);
         contentPane.add(lblNewLabel);
 
-//        // First Column
-//        JPanel panel = new JPanel();
-//        panel.setBounds(15, 15, 100, 800);
-//        contentPane.add(panel);
-//        panel.setLayout(null);
-//
-//        JPanel panel_9 = new JPanel();
-//        panel_9.setBackground(new Color(255, 255, 255));
-//        panel_9.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_9.setBounds(0, 0, 100, 100);
-//        panel.add(panel_9);
-//
-//        JPanel panel_10 = new JPanel();
-//        panel_10.setBackground(new Color(255, 255, 255));
-//        panel_10.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_10.setBounds(0, 100, 100, 100);
-//        panel.add(panel_10);
-//
-//        JPanel panel_11 = new JPanel();
-//        panel_11.setBackground(new Color(255, 255, 255));
-//        panel_11.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_11.setBounds(0, 200, 100, 100);
-//        panel.add(panel_11);
-//
-//        JPanel panel_12 = new JPanel();
-//        panel_12.setBackground(new Color(255, 255, 255));
-//        panel_12.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_12.setBounds(0, 300, 100, 100);
-//        panel.add(panel_12);
-//
-//        JPanel panel_13 = new JPanel();
-//        panel_13.setBackground(new Color(255, 255, 255));
-//        panel_13.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_13.setBounds(0, 400, 100, 100);
-//        panel.add(panel_13);
-//
-//        JPanel panel_14 = new JPanel();
-//        panel_14.setBackground(new Color(255, 255, 255));
-//        panel_14.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_14.setBounds(0, 500, 100, 100);
-//        panel.add(panel_14);
-//
-//        JPanel panel_15 = new JPanel();
-//        panel_15.setBackground(new Color(255, 255, 255));
-//        panel_15.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_15.setBounds(0, 600, 100, 100);
-//        panel.add(panel_15);
-//
-//        JPanel panel_16 = new JPanel();
-//        panel_16.setBackground(new Color(255, 255, 255));
-//        panel_16.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_16.setBounds(0, 700, 100, 100);
-//        panel.add(panel_16);
-//
-//        //Second Column
-//        JPanel panel_1 = new JPanel();
-//        panel_1.setBounds(115, 15, 100, 800);
-//        contentPane.add(panel_1);
-//        panel_1.setLayout(null);
-//
-//        JPanel panel_17 = new JPanel();
-//        panel_17.setBackground(new Color(255, 255, 255));
-//        panel_17.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_17.setBounds(0, 0, 100, 100);
-//        panel_1.add(panel_17);
-//
-//        JPanel panel_18 = new JPanel();
-//        panel_18.setBackground(new Color(255, 255, 255));
-//        panel_18.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_18.setBounds(0, 100, 100, 100);
-//        panel_1.add(panel_18);
-//
-//        JPanel panel_19 = new JPanel();
-//        panel_19.setBackground(new Color(255, 255, 255));
-//        panel_19.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_19.setBounds(0, 200, 100, 100);
-//        panel_1.add(panel_19);
-//
-//        JPanel panel_20 = new JPanel();
-//        panel_20.setBackground(new Color(255, 255, 255));
-//        panel_20.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_20.setBounds(0, 300, 100, 100);
-//        panel_1.add(panel_20);
-//
-//        JPanel panel_21 = new JPanel();
-//        panel_21.setBackground(new Color(255, 255, 255));
-//        panel_21.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_21.setBounds(0, 400, 100, 100);
-//        panel_1.add(panel_21);
-//
-//        JPanel panel_22 = new JPanel();
-//        panel_22.setBackground(new Color(255, 255, 255));
-//        panel_22.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_22.setBounds(0, 500, 100, 100);
-//        panel_1.add(panel_22);
-//
-//        JPanel panel_23 = new JPanel();
-//        panel_23.setBackground(new Color(255, 255, 255));
-//        panel_23.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_23.setBounds(0, 600, 100, 100);
-//        panel_1.add(panel_23);
-//
-//        JPanel panel_24 = new JPanel();
-//        panel_24.setBackground(new Color(255, 255, 255));
-//        panel_24.setBorder(new LineBorder(new Color(0, 0, 0), 1));
-//        panel_24.setBounds(0, 700, 100, 100);
-//        panel_1.add(panel_24);
-//
-//        // Third Column
-//        JPanel panel_2 = new JPanel();
-//        panel_2.setBounds(215, 15, 100, 800);
-//        contentPane.add(panel_2);
-//        panel_2.setLayout(null);
 
-//        int [][] grid = new int[6][6];
-//
-//        for (int row = 0; row < grid.length; row++) {
-//            for (int col = 0; col < grid[row].length; col++) {
-//
-//            }
-//        }
-        // Above approach is time wasting, and not future maintainable
-        // Optimizing algo
         JPanel[][] panel_88 = new JPanel[8][8];
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        JPanel panel4 = new JPanel();
+        JPanel panel5 = new JPanel();
+        JPanel panel6 = new JPanel();
+        JPanel panel7 = new JPanel();
+        JPanel panel8 = new JPanel();
+
 
         for (int i = 0; i < panel_88.length; i++) {
-            JPanel panel_2 = new JPanel();
-            panel_2.setBounds(215, 15, 100, 800);
-            contentPane.add(panel_2);
-            panel_2.setLayout(null);
-            for (int j = 0; j < panel_88[i].length; j++) {
-                panel_88[i][j] = new JPanel();
-                panel_88[i][j].setBackground(new Color(255, 255, 255));
-                panel_88[i][j].setBorder(new LineBorder(new Color(0, 0, 0), 1));
-                panel_88[i][j].setBounds(0, 700, 100, 100);
+            switch (i) {
+                case 1:
+                    drawGrid (i, panel_88, 0, 15, panel1);
+                    break;
+                case 2:
+                    drawGrid (i, panel_88, 0, 115, panel2);
+                    break;
+                case 3:
+                    drawGrid (i, panel_88, 0, 215, panel3);
+                    break;
+                case 4:
+                    drawGrid (i, panel_88, 0, 315, panel4);
+                    break;
+                case 5:
+                    drawGrid (i, panel_88, 0, 415, panel5);
+                    break;
+                case 6:
+                    drawGrid (i, panel_88, 0, 515, panel6);
+                    break;
+                case 7:
+                    drawGrid (i, panel_88, 0, 615, panel7);
+                    break;
+                case 8:
+                    drawGrid (i, panel_88, 0, 715, panel8);
+                    break;
+                case 9:
+                    break;
             }
         }
     }
 
 
-
-
-    public void gridClass (int num) {
-
+    public void drawGrid (int i, JPanel panel_88[][], int panel88Value, int panelxValue, JPanel panel) {
+        panel.setBounds(panelxValue, 15, 100, 800);
+        contentPane.add(panel);
+        panel.setLayout(null);
+        for (int j = 0; j < panel_88[i].length; j++) {
+            panel_88[i][j] = new JPanel();
+            panel_88[i][j].setBackground(new Color(255, 255, 255));
+            panel_88[i][j].setBorder(new LineBorder(new Color(0, 0, 0), 1));
+            panel_88[i][j].setBounds(0, panel88Value, 100, 100);
+            panel.add(panel_88[i][j]);
+            panel88Value+=100;
+        }
     }
 
 
