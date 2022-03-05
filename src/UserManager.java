@@ -11,7 +11,7 @@ public class UserManager
         users = new ArrayList<String>();
     }
 
-    // Return boolean status in order to 
+    // Return boolean status in order to allow later action 
     public boolean login(String name)
     {
         boolean login = false;
