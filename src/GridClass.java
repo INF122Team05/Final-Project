@@ -127,7 +127,7 @@ public class GridClass extends JFrame {
         }
     }
 
-
+    // Draw necessary panel
     public void drawGrid (int i, JPanel panel_88[][], int panel88Value, int panelxValue, JPanel panel) {
         panel.setBounds(panelxValue, 15, 100, 800);
         contentPane.add(panel);
