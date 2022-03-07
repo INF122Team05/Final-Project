@@ -4,7 +4,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
+import javax.swing.JTextField;
 
 // Needed to have a fixed dimension based on the game type
 // Num representing the Game
@@ -14,6 +16,7 @@ public class Grid extends JFrame {
 
     // Global Variable
     private JPanel contentPane;
+    private JTextField textContent;
 
 
     public static void main(String[] args) {
@@ -34,7 +37,7 @@ public class Grid extends JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 400, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 300, Short.MAX_VALUE)
@@ -59,6 +62,8 @@ public class Grid extends JFrame {
         JMenu mnNewMenu = new JMenu("Bejeweled");
         mnNewMenu.setFont(new Font("Sylfaen", Font.BOLD, 17));
         menuBar.add(mnNewMenu);
+
+
         contentPane = new JPanel();
         contentPane.setBackground(new Color(176, 196, 222));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,6 +76,36 @@ public class Grid extends JFrame {
         lblNewLabel.setFont(new Font("Sylfaen", Font.BOLD, 17));
         lblNewLabel.setBounds(858, 0, 222, 32);
         contentPane.add(lblNewLabel);
+
+        JPanel panel = new JPanel();
+        panel.setBounds(790, 100, 200, 600);
+        contentPane.add(panel);
+        panel.setLayout(null);
+        textContent = new JTextField(30);
+        textContent.setBounds(0, 580, 150, 20);
+        JButton button = new JButton("Enter");
+        button.setBounds(150, 580, 150, 20);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == button){
+                    // Input by click on the button
+                    String input = textContent.getText();
+                    System.out.println(input);
+                }
+            }
+        });
+
+        textContent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Input from User
+                String input = textContent.getText();
+                System.out.println(input);
+            }
+        });
+        panel.add(button);
+        panel.add(textContent);
 
 
         JPanel[][] panel_88 = new JPanel[8][8];
