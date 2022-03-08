@@ -48,7 +48,7 @@ public class Block {
 		return this.width;
 	}
 	public Image getBlockImage(){
-		return this.blockImage
+		return this.blockImage;
 	}
 	public int getRow(){
 		return this.row;
