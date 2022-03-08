@@ -1,14 +1,14 @@
-import javafx.scene.image.Image;
+import java.awt.image.BufferedImage;
 
 public class Block {
 	private String color;
 	private int length;
 	private int width;
-	private Image blockImage;
+	private BufferedImage blockImage;
 	private int row;
 	private int col;
 
-	public Block(String color, int length, int width, Image blockImage, int row, int col){
+	public Block(String color, int length, int width, BufferedImage blockImage, int row, int col){
 		this.color = color;
 		this.length = length;
 		this.width = width;
@@ -27,7 +27,7 @@ public class Block {
 	public void setWidth(int width){
 		this.width = width;
 	}
-	public void setImage(Image blockImage){
+	public void setImage(BufferedImage blockImage){
 		this.blockImage = blockImage;
 	}
 	public void setRow(int row){
@@ -47,7 +47,7 @@ public class Block {
 	public int getWidth(){
 		return this.width;
 	}
-	public Image getBlockImage(){
+	public BufferedImage getBlockImage(){
 		return this.blockImage;
 	}
 	public int getRow(){
