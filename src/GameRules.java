@@ -1,7 +1,8 @@
 public class GameRules {
-    public void GameRules(){
-        int totalTime;
-        String description;
+    private int totalTime;
+    private String description;
+
+    public GameRules(){    
     }
 
     public int scoreCalculation(){
@@ -24,6 +25,6 @@ public class GameRules {
     }
 
     public void setDescription(String newDescription){
-        this.description = newDescription
+        this.description = newDescription;
     }
 }
