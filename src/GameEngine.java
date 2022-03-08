@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public abstract class GameEngine extends Thread {
     private Grid grid;
-    private Timer timer;
+    private GameTimer timer;
     private String gameDescription;
 
     // These hold the temporary selections by the user
@@ -11,8 +11,7 @@ public abstract class GameEngine extends Thread {
 
     public GameEngine(GameRules rules){
         grid = new Grid();
-        timer = new Timer();
-        timer.setTime(rules.getTotalTime());
+        timer = new GameTimer(rules.getTotalTime());
 
         gameDescription = rules.getDescription();
         firstSelection = "";
@@ -41,9 +40,9 @@ public abstract class GameEngine extends Thread {
     public boolean runGame(){
         String input = "";
         Scanner sc = new Scanner(System.in);
-        timer.countDown();
+        timer.runTimer();
 
-        while(timer.getTimeRemaining() != 0){
+        while(timer.getTimeRemaining() > 0){
             // Check if there is input
             if (sc.hasNext() && firstSelection.isEmpty()){
                 // User provides input: Potentially (x,y) coordinate on grid of block they select first

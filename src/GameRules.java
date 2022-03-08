@@ -2,7 +2,8 @@ public class GameRules {
     private int totalTime;
     private String description;
 
-    public GameRules(){    
+    public GameRules(int totalTime){
+        this.totalTime = totalTime;    
     }
 
     public int scoreCalculation(){

@@ -21,7 +21,7 @@ public class GameTimer {
         return this.time;
     }
     
-    public void runTask(){
+    public void runTimer(){
         Timer timer = new Timer();
         TimerTask task = new TimerTask()
         {
@@ -45,6 +45,6 @@ public class GameTimer {
 
     public static void main(String[] args){
         GameTimer gameTimer = new GameTimer(10);
-        gameTimer.runTask();
+        gameTimer.runTimer();
     }    
 }
