@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public abstract class GameEngine extends Thread {
     private Grid grid;
     private Timer timer;
@@ -10,7 +8,7 @@ public abstract class GameEngine extends Thread {
     private String secondSelection;
 
     public GameEngine(GameRules rules){
-        grid = new Grid();
+        buildGame();
         timer = new Timer();
         timer.setTime(rules.getTotalTime());
 
@@ -20,52 +18,71 @@ public abstract class GameEngine extends Thread {
     }
 
     /** This method builds the GUI of the game **/
-    public void buildGame(){}
+    private void buildGame(){
+        try {
+            grid = new Grid();
+            grid.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /** Verify valid game move **/
-    public boolean verifyMove(String move){
+    private boolean verifyMove(String move){
         return true;
     }
 
     /** This method checks if a move can be made, if so, it makes the move and returns true **/
-    public boolean checkAndMakeMove(){
+    private boolean checkAndMakeMove(){
         return true;
     }
 
     /** This method checks if the game has been won, if so, returns true **/
-    public boolean checkGameStatus(){
+    private boolean checkGameStatus(){
         return true;
     }
 
     /** This method provides a default runnable game **/
     public boolean runGame(){
-        String input = "";
-        Scanner sc = new Scanner(System.in);
         timer.countDown();
 
         while(timer.getTimeRemaining() != 0){
-            // Check if there is input
-            if (sc.hasNext() && firstSelection.isEmpty()){
-                // User provides input: Potentially (x,y) coordinate on grid of block they select first
-                input = sc.nextLine();
-
-                // Verify valid input
-                if (verifyMove(input)){
-                    firstSelection = input;
+            try{sleep(1000);}catch (InterruptedException e){}
+            if (grid.checkInput) {
+                // End game
+                if (grid.userInput.equals("end")){
+                    grid.setVisible(false);
+                    return false;
                 }
-            }
-            else if (sc.hasNext()){
-                input = sc.nextLine();
-
-                if (verifyMove(input)){
-                    secondSelection = input;
-                    checkAndMakeMove();
-                    firstSelection = "";
-                    secondSelection = "";
+                // First selection
+                else if (!grid.userInput.isEmpty() && firstSelection.isEmpty()) {
+                    // User provides input: Potentially (x,y) coordinate on grid of block they select first
+                    // Verify valid input
+                    if (verifyMove(grid.userInput)) {
+                        System.out.println("First move: " + grid.userInput);
+                        firstSelection = grid.userInput;
+                    } else {
+                        // Display error: Invalid move
+                        System.out.println("Invalid move");
+                    }
+                    grid.checkInput = false;
                 }
-            }
-            else if (checkGameStatus()){
-                return true;
+                // Second selection
+                else if (!grid.userInput.isEmpty()) {
+                    if (verifyMove(grid.userInput)) {
+                        System.out.println("Got the second move!");
+                        secondSelection = grid.userInput;
+                        checkAndMakeMove();
+                        firstSelection = "";
+                        secondSelection = "";
+                    } else {
+                        // Display error: Invalid move
+                        System.out.println("Invalid move");
+                    }
+                    grid.checkInput = false;
+                } else if (!checkGameStatus()) {
+                    return true;
+                }
             }
         }
         return false;

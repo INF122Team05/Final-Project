@@ -17,7 +17,8 @@ public class Grid extends JFrame {
     // Global Variable
     private JPanel contentPane;
     private JTextField textContent;
-
+    public String userInput;
+    public boolean checkInput;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -92,6 +93,8 @@ public class Grid extends JFrame {
                     // Input by click on the button
                     String input = textContent.getText();
                     System.out.println(input);
+                    userInput = input;
+                    checkInput = true;
                 }
             }
         });
