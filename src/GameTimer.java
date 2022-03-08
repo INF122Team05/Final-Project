@@ -8,19 +8,17 @@ public class GameTimer {
         this.time = totalTime;
     }
 
+    /** This method returns the remaining amount of time **/
     public int getTimeRemaining(){
         return this.time;
     }
 
+    /** This method sets the remaining amount of time **/
     public void setTime(int newTime){
         this.time = newTime;
     }
-
-    public int countDown(){
-        this.time -= 1;
-        return this.time;
-    }
     
+    /** This method starts the timer and prints the amount of time left **/
     public void runTimer(){
         Timer timer = new Timer();
         TimerTask task = new TimerTask()
