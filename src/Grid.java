@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
-
+import java.awt.Image;
 // Needed to have a fixed dimension based on the game type
 // Num representing the Game
 // Based on the Game, Generating Different size of Grid
@@ -166,6 +166,12 @@ public class Grid extends JFrame {
             panel_88[i][j].setBounds(0, panel88Value, 100, 100);
             panel.add(panel_88[i][j]);
             panel88Value+=100;
+            //adding image onto grid
+            Block myPicture = new Block();
+            myPicture.setImage();
+            Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
+            JLabel picLabel = new JLabel(new ImageIcon(block));
+            panel_88[i][j].add(picLabel);
         }
     }
 

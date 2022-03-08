@@ -1,24 +1,19 @@
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Block {
-	private String color;
 	private int length;
 	private int width;
 	private BufferedImage blockImage;
 	private int row;
 	private int col;
+	private int id;
 
-	public Block(String color, int length, int width, BufferedImage blockImage, int row, int col){
-		this.color = color;
-		this.length = length;
-		this.width = width;
-		this.blockImage = blockImage;
-		this.row = row;
-		this.col = col;
-	}
-
-	public void setColor(String color){
-		this.color = color;
+	public Block(){
 	}
 
 	public void setLength(int length){
@@ -27,8 +22,17 @@ public class Block {
 	public void setWidth(int width){
 		this.width = width;
 	}
-	public void setImage(BufferedImage blockImage){
-		this.blockImage = blockImage;
+	public void setImage(){
+		Random rand = new Random();
+		try {                
+			File dir = new File("src/assets/bejeweled");
+			File[] directoryListing = dir.listFiles();
+			this.id = rand.nextInt(directoryListing.length);
+	      //  this.blockImage = ImageIO.read(new File("src/assets/bejeweled/blue_gem.png"));
+		 	this.blockImage = ImageIO.read(directoryListing[this.id]);
+	       } catch (IOException ex) {
+	            // handle exception...
+	       }
 	}
 	public void setRow(int row){
 		this.row = row;
@@ -37,9 +41,6 @@ public class Block {
 		this.col = col;
 	}
 
-	public String getColor(){
-		return this.color;
-	}
 
 	public int getLength(){
 		return this.length;
