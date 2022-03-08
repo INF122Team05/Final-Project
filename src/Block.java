@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 public class Block {
 	private String color;
 	private int length;
