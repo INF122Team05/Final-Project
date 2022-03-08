@@ -1,7 +1,8 @@
 public class GameRules {
-    public void GameRules(){
-        int totalTime;
-        String description;
+    private int totalTime;
+    private String description;
+
+    public GameRules(){    
     }
 
     public int scoreCalculation(){
