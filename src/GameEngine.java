@@ -1,6 +1,6 @@
 public abstract class GameEngine extends Thread {
     private Grid grid;
-    private Timer timer;
+    private GameTimer timer;
     private String gameDescription;
 
     // These hold the temporary selections by the user
@@ -9,8 +9,7 @@ public abstract class GameEngine extends Thread {
 
     public GameEngine(GameRules rules){
         buildGame();
-        timer = new Timer();
-        timer.setTime(rules.getTotalTime());
+        timer = new GameTimer(rules.getTotalTime());
 
         gameDescription = rules.getDescription();
         firstSelection = "";
@@ -44,7 +43,7 @@ public abstract class GameEngine extends Thread {
 
     /** This method provides a default runnable game **/
     public boolean runGame(){
-        timer.countDown();
+        timer.runTimer();
 
         while(timer.getTimeRemaining() != 0){
             try{sleep(1000);}catch (InterruptedException e){}

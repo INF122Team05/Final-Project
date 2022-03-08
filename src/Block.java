@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 public class Block {
 	private String color;
 	private int length;
@@ -46,7 +48,7 @@ public class Block {
 		return this.width;
 	}
 	public Image getBlockImage(){
-		return this.blockImage
+		return this.blockImage;
 	}
 	public int getRow(){
 		return this.row;
