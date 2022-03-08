@@ -69,7 +69,7 @@ public abstract class GameEngine extends Thread {
                 // Second selection
                 else if (!grid.userInput.isEmpty()) {
                     if (verifyMove(grid.userInput)) {
-                        System.out.println("Got the second move!");
+                        System.out.println("Second move: " + grid.userInput);
                         secondSelection = grid.userInput;
                         checkAndMakeMove();
                         firstSelection = "";
