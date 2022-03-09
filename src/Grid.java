@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import java.awt.Image;
+import javax.swing.Timer;
+
 // Needed to have a fixed dimension based on the game type
 // Num representing the Game
 // Based on the Game, Generating Different size of Grid
@@ -19,6 +21,8 @@ public class Grid extends JFrame {
     private JTextField textContent;
     public String userInput;
     public boolean checkInput;
+    private Timer timer;
+    private int seconds;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -78,14 +82,59 @@ public class Grid extends JFrame {
         lblNewLabel.setBounds(858, 0, 222, 32);
         contentPane.add(lblNewLabel);
 
+        // User input panel
         JPanel panel = new JPanel();
         panel.setBounds(790, 100, 200, 600);
         contentPane.add(panel);
         panel.setLayout(null);
+
+        // Timer Label
+        JLabel timerLabel = new JLabel("");
+        timerLabel.setBounds(25, 250, 150, 60);
+        timerLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(timerLabel);
+        timerLabel.setFont(new Font("Arial", Font.PLAIN, 70));
+
+        // User input Stop button
+        JButton stopButton = new JButton("Stop");
+        stopButton.setFont(new Font("Sylfaen", Font.CENTER_BASELINE, 35));
+        stopButton.setBounds(25, 100, 150, 50);
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == stopButton){
+                    timer.stop();
+                }
+            }
+        });
+        panel.add(stopButton);
+
+
+        // User input Start button
+        JButton startButton = new JButton("Start");
+        startButton.setFont(new Font("Sylfaen", Font.CENTER_BASELINE, 35));
+        startButton.setBounds(25, 170, 150, 50);
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == startButton){
+                    timer(timerLabel);
+                    timer.start();
+                }
+            }
+        });
+        panel.add(startButton);
+
+
+
+
+        // User input text field
         textContent = new JTextField(30);
-        textContent.setBounds(0, 580, 150, 20);
+        textContent.setBounds(25, 480, 150, 20);
+        // User input Enter button
         JButton button = new JButton("Enter");
-        button.setBounds(150, 580, 150, 20);
+        button.setFont(new Font("Sylfaen", Font.HANGING_BASELINE, 15));
+        button.setBounds(65, 510, 70, 25);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -173,6 +222,22 @@ public class Grid extends JFrame {
             JLabel picLabel = new JLabel(new ImageIcon(block));
             panel_88[i][j].add(picLabel);
         }
+    }
+    private void timer(JLabel timeLabel) {
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (seconds > 300) {
+                    timeLabel.setText("Time Over");
+                    timer.stop();
+                }
+                seconds++;
+                timeLabel.setText("" + seconds);
+
+
+            }
+        });
+
     }
 
 
