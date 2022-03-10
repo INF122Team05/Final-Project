@@ -15,7 +15,9 @@ public class Block {
 
 	public Block(){
 	}
-
+	public int getID(){
+		return this.id;
+	}
 	public void setLength(int length){
 		this.length = length;
 	}
