@@ -252,14 +252,11 @@ public class Grid extends JFrame {
 
     public void removeBlock(int x, int y){
         Component[] componentList = panel_88[x][y].getComponents();
-        System.out.println("removing");
-       for(Component c : componentList){
-
-            if(c instanceof JLabel){
-                 panel_88[x][y].remove(c);
-            }
+        for(Component c : componentList){
+                if(c instanceof JLabel){
+                    panel_88[x][y].remove(c);
+                }
         }   
-
         panel_88[x][y].revalidate();
         panel_88[x][y].repaint();
     }
