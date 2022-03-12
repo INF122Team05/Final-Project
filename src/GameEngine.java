@@ -1,19 +1,19 @@
+import java.awt.*;
+import java.util.ArrayList;
+
 public abstract class GameEngine extends Thread {
     private Grid grid;
     private GameTimer timer;
     private String gameDescription;
 
     // These hold the temporary selections by the user
-    private String firstSelection;
-    private String secondSelection;
+    private String selection;
 
     public GameEngine(GameRules rules){
         buildGame();
         timer = new GameTimer(rules.getTotalTime());
-
         gameDescription = rules.getDescription();
-        firstSelection = "";
-        secondSelection = "";
+        selection = "";
     }
 
     /** This method builds the GUI of the game **/
@@ -26,14 +26,128 @@ public abstract class GameEngine extends Thread {
         }
     }
 
+    /** After a move has been validated, make the move **/
+    private void updateBlocks(ArrayList<Point> coords){
+        for(Point coord : coords){
+            grid.removeBlock(coord.x, coord.y);
+            // Count a score here
+        }
+        grid.updateGrid();
+    }
+
+    /** Check if there is at least 3 matching blocks in a row. It returns the longest move, or -1 if no move **/
+    public ArrayList<Point> checkForMatch(int x, int y, int blockID, int gridWidth, int gridHeight, int originalX, int originalY){
+        ArrayList<Point> longestMoveTopDown = new ArrayList<>();
+        ArrayList<Point> longestMoveLeftRight = new ArrayList<>();
+
+        // If theres a match to the right
+        if ((x < gridWidth-1) && (blockID == grid.blockBlock[x+1][y].getID()) && (x+1 != originalX)){
+            for (int i=x+1; i<gridWidth; i++){
+                if (blockID == grid.blockBlock[i][y].getID()){
+                    longestMoveLeftRight.add(new Point(i,y));
+                }
+                else{break;}
+            }
+        }
+        // If theres a match to the left
+        if((x > 0) && (blockID == grid.blockBlock[x-1][y].getID()) && (x-1 != originalX)){
+            for (int i=x-1; i>=0; i--){
+                if (blockID == grid.blockBlock[i][y].getID()){
+                    longestMoveLeftRight.add(new Point(i,y));
+                }
+                else{break;}
+            }
+        }
+        // If theres a match below
+        if((y < gridHeight-1) && (blockID == grid.blockBlock[x][y+1].getID()) && (y+1 != originalY)){
+            for (int i=y+1; i<gridHeight; i++){
+                if (blockID == grid.blockBlock[x][i].getID()){
+                    longestMoveTopDown.add(new Point(x,i));
+                }
+                else{break;}
+            }
+        }
+        // If theres a match above
+        if((y > 0) && (blockID == grid.blockBlock[x][y-1].getID()) && (y-1 != originalY)){
+            for (int i=y-1; i>=0; i--){
+                if (blockID == grid.blockBlock[x][i].getID()){
+                    longestMoveTopDown.add(new Point(x,i));
+                }
+                else{break;}
+            }
+        }
+
+
+        if (longestMoveLeftRight.isEmpty() && longestMoveTopDown.isEmpty()){return null;}
+        else {
+            if (longestMoveLeftRight.size() > longestMoveTopDown.size()){
+                longestMoveLeftRight.add(new Point(x,y));
+                return longestMoveLeftRight;
+            }
+            else{
+                longestMoveTopDown.add(new Point(x,y));
+                return longestMoveTopDown;
+            }
+        }
+    }
+
     /** Verify valid game move **/
     private boolean verifyMove(String move){
-        return true;
+        String[] inputNum = move.split(",");
+        int numX, numY, num2X, num2Y;
+        int gridMax = 6;
+        try {
+            numX = Integer.parseInt(inputNum[0]);
+            numY = Integer.parseInt(inputNum[1]);
+            num2X = Integer.parseInt(inputNum[2]);
+            num2Y = Integer.parseInt(inputNum[3]);
+        }catch (NumberFormatException e){
+            System.out.println("Invalid move format:\nTry a,b,c,d which translates to (a,b) (c,d)");
+            return false;
+        }
+
+        // User types 1-6 instead of 0-5, so we need to adjust that
+        numX--;
+        numY--;
+        num2X--;
+        num2Y--;
+
+        // If selection is within the grid
+        if ((numX < gridMax) && (numX >= 0) && (num2X < gridMax) && (num2X >= 0) && (numY < gridMax) && (numY >= 0) && (num2Y < gridMax) && (num2Y >= 0)){
+            // If selection is a pair next to each other
+            if (
+                    ((numX + 1 == num2X) && (numY == num2Y)) || ((numX - 1 == num2X) && (numY == num2Y))
+                            || ((numX == num2X) && (numY + 1 == num2Y)) || ((numX == num2X) && (numY - 1 == num2Y))
+            ){
+                // Check for matches
+                ArrayList<Point> blocksToChangeMain = checkForMatch(num2X, num2Y, grid.blockBlock[numX][numY].getID() ,gridMax, gridMax, numX, numY);
+                ArrayList<Point> blocksToChangeSelected = checkForMatch(numX, numY, grid.blockBlock[num2X][num2Y].getID() ,gridMax, gridMax, num2X, num2Y);
+                if (blocksToChangeMain == null && blocksToChangeSelected == null){
+                    return false;
+                }
+                else{
+                    grid.swapImage(true, move);
+                    try{sleep(1000);}catch (InterruptedException e){System.out.println("Failed to sleep");}
+                    if (blocksToChangeMain != null){
+                        updateBlocks(blocksToChangeMain);
+                    }
+                    if (blocksToChangeSelected != null){
+                        updateBlocks(blocksToChangeSelected);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /** This method checks if a move can be made, if so, it makes the move and returns true **/
-    private boolean checkAndMakeMove(){
-        return true;
+    private boolean checkAndMakeMove(String move){
+        if(verifyMove(move)){
+            grid.swapImage(true, move);
+            return true;
+        }
+        return false;
     }
 
     /** This method checks if the game has been won, if so, returns true **/
@@ -53,27 +167,12 @@ public abstract class GameEngine extends Thread {
                     grid.setVisible(false);
                     return false;
                 }
-                // First selection
-                else if (!grid.userInput.isEmpty() && firstSelection.isEmpty()) {
-                    // User provides input: Potentially (x,y) coordinate on grid of block they select first
-                    // Verify valid input
-                    if (verifyMove(grid.userInput)) {
-                        System.out.println("First move: " + grid.userInput);
-                        firstSelection = grid.userInput;
-                    } else {
-                        // Display error: Invalid move
-                        System.out.println("Invalid move");
-                    }
-                    grid.checkInput = false;
-                }
-                // Second selection
+                // Selection
                 else if (!grid.userInput.isEmpty()) {
-                    if (verifyMove(grid.userInput)) {
-                        System.out.println("Second move: " + grid.userInput);
-                        secondSelection = grid.userInput;
-                        checkAndMakeMove();
-                        firstSelection = "";
-                        secondSelection = "";
+                    // User provides input: #,#,#,#
+                    // Verify valid input
+                    if (checkAndMakeMove(grid.userInput)) {
+                        System.out.println("Move made");
                     } else {
                         // Display error: Invalid move
                         System.out.println("Invalid move");
