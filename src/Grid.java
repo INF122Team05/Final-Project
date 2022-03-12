@@ -363,6 +363,7 @@ public class Grid extends JFrame {
         }
 
     }
+    
     public void addSecondBlock (int x, int y, int x2, int y2, Component first) {
         Component[] component1 = panel_88[x2][y2].getComponents();
         for(Component c : component1){
