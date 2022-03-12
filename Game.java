@@ -77,7 +77,7 @@ public class Game {
                 Block current = arr_b[i][j];
                 int c_id = current.getID();
                 // if there is any vertical matches 
-                if (i <= arr_b.length - 3 && c_id == arr_b[i][j + 1].getID() && c_id == arr_b[i][j + 2].getID())
+                if (j <= arr_b[i].length - 3 && c_id == arr_b[i][j + 1].getID() && c_id == arr_b[i][j + 2].getID())
                 {
                     verticalMatch = true;
                     // arr_b.remove(i, j);
@@ -106,7 +106,7 @@ public class Game {
                 int c_id = current.getID();
 
                 // if there is any horizontal match 
-                if (j <= arr_b[i].length - 3 && c_id == arr_b[i + 1][j].getID() && c_id == arr_b[i + 2][j].getID())
+                if (i <= arr_b.length - 3 && c_id == arr_b[i + 1][j].getID() && c_id == arr_b[i + 2][j].getID())
                 {
                     horizaontalMatch = true;
                     // arr_b.remove(i, j);
