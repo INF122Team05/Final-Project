@@ -151,8 +151,6 @@ public class Grid extends JFrame {
                     String input = textContent.getText();
                     System.out.println(input);
                     userInput = input;
-                    checkInput = true;
-                    swapImage(checkInput, input);
                 }
             }
         });
