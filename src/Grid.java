@@ -205,8 +205,8 @@ public class Grid extends JFrame {
                     break;
             }
         }
-        printBlocks();
-        System.out.println(checkAvailableMoves());
+        printBlocks(); //for debugging
+        checkAvailableMoves();
 //        printBlocks();
 
     }
@@ -317,13 +317,13 @@ public class Grid extends JFrame {
     			}
     		}
     	}
-    	return false;
+    	return false; //no available moves
     }
     
+    //debugging purposes
     private void printBlocks() {
     	for (Block[] x: this.blocks) {
         	for (Block y: x) {
-//        		System.out.print(y.getRow() + " " + y.getCol() + ", " );
         		System.out.print(y.getID() + ", " );
         	}
         	System.out.println();
