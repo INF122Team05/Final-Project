@@ -411,13 +411,15 @@ public class Grid extends JFrame {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (seconds > 300) {
+                if (seconds >= 300) {
+                    timeLabel.setFont(new Font("Arial", Font.PLAIN, 30));
                     timeLabel.setText("Time Over");
                     timer.stop();
                 }
-                seconds++;
-                timeLabel.setText("" + seconds);
-
+                else{
+                    seconds++;
+                    timeLabel.setText("" + seconds);
+                }
 
             }
         });
