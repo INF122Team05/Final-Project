@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
@@ -174,10 +175,10 @@ public class Grid extends JFrame {
 
 
         for (int i = 0; i < panel_88.length; i++) {
-
             switch (i) {
                 case 0:
                     drawGrid (i, panel_88, 0, 15, panel1);
+                    break;
                 case 1:
                     drawGrid (i, panel_88, 0, 115, panel2);
                     break;
@@ -219,12 +220,12 @@ public class Grid extends JFrame {
             panel.add(panel_88[i][j]);
             panel88Value+=100;
             //adding image onto grid
-
             myPicture.setImage();
             Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
             JLabel picLabel = new JLabel(new ImageIcon(block));
             System.out.println(myPicture.getID());
             panel_88[i][j].add(picLabel);
+            
         }
     }
 
@@ -247,6 +248,20 @@ public class Grid extends JFrame {
             System.out.println(panel_88[num2X][num2Y]);
         }
 
+    }
+
+    public void removeBlock(int x, int y){
+        Component[] componentList = panel_88[x][y].getComponents();
+        System.out.println("removing");
+       for(Component c : componentList){
+
+            if(c instanceof JLabel){
+                 panel_88[x][y].remove(c);
+            }
+        }   
+
+        panel_88[x][y].revalidate();
+        panel_88[x][y].repaint();
     }
 
     private void timer(JLabel timeLabel) {
