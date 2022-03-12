@@ -133,6 +133,10 @@ public class Grid extends JFrame {
 
 
         // User input text field
+        JLabel coords = new JLabel();
+        coords.setBounds(25, 460, 150, 20);
+        coords.setFont(new Font("Arial", Font.PLAIN, 15));
+        coords.setText("Enter coordinates (x1,y1,x2,y2): ");
         textContent = new JTextField(30);
         textContent.setBounds(25, 480, 150, 20);
         // User input Enter button
@@ -163,19 +167,20 @@ public class Grid extends JFrame {
         });
         panel.add(button);
         panel.add(textContent);
+        panel.add(coords);
 
 
         // User input GAME NAME
         JLabel namePrompt = new JLabel();
-        namePrompt.setBounds(25, 300, 150, 20);
+        namePrompt.setBounds(25, 330, 150, 20);
         namePrompt.setFont(new Font("Arial", Font.PLAIN, 15));
         namePrompt.setText("Enter a game name:");
         JTextField gameName = new JTextField(30);
-        gameName.setBounds(25, 330, 150, 20);
+        gameName.setBounds(25, 350, 150, 20);
         // User input Enter button
         JButton nameButton = new JButton("Enter");
         nameButton.setFont(new Font("Sylfaen", Font.HANGING_BASELINE, 15));
-        nameButton.setBounds(65, 360, 70, 25);
+        nameButton.setBounds(65, 380, 70, 25);
         nameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
