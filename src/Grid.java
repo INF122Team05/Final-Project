@@ -68,7 +68,7 @@ public class Grid extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        JMenu mnNewMenu = new JMenu("Bejeweled");
+        JMenu mnNewMenu = new JMenu("Tile Matching Game");
         mnNewMenu.setFont(new Font("Sylfaen", Font.BOLD, 17));
         menuBar.add(mnNewMenu);
 
@@ -182,6 +182,7 @@ public class Grid extends JFrame {
                 if (e.getSource() == nameButton){
                     // Input by click on the button
                     String input = gameName.getText();
+                    mnNewMenu.setText(input.toUpperCase());
                     gameSelect = input;
                     System.out.println(input);
                     userInput = input;
