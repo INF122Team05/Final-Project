@@ -189,7 +189,6 @@ public class Grid extends JFrame {
                     String input = gameName.getText();
                     mnNewMenu.setText(input.toUpperCase());
                     gameSelect = input;
-                    System.out.println(input);
                     userInput = input;
                     checkInput = true;
                     addImages(input);
@@ -245,9 +244,9 @@ public class Grid extends JFrame {
                     drawGrid (i, panel_88, 0, 515, panel6);
                     break;
             }
-            System.out.println();
+           // System.out.println();
         }
-        System.out.println("Above are ID");
+       // System.out.println("Above are ID");
 
 //        for (int i = 0; i < id.length; i++) {
 //            for (int j = 0; j < id[i].length; j++) {
