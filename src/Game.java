@@ -1,17 +1,21 @@
-import java.util.Timer;
-
 public class Game {
 
     private String name; 
     private int score;
-    private Timer timer = new Timer(); 
+    // private Timer timer = new Timer(); 
 
     public Game(){
+        setName(name);
+        setScore(score);
+    }
+
+    public void startGameInstance(){
 
     }
 
-    public void startGameInstance() {
-
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     public String getName(){
@@ -22,6 +26,11 @@ public class Game {
         return this.score;
     }
 
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
+/*
     public void setTimer(){
         //set timer duration
     }
@@ -29,7 +38,7 @@ public class Game {
     public Timer getTimer(){
         return this.timer; 
     }
-
+*/
    /** This method determine if the initial board of the game has matches */
    public boolean checkInitialBoard(Grid g)
    {
