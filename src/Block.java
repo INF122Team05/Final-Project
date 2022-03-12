@@ -12,8 +12,10 @@ public class Block {
 	private int row;
 	private int col;
 	private int id;
+	private String gameName;
 
-	public Block(){
+	public Block(String gameName){
+		this.gameName = gameName;
 	}
 	public int getID(){
 		return this.id;
@@ -27,7 +29,10 @@ public class Block {
 	public void setImage(){
 		Random rand = new Random();
 		try {                
-			File dir = new File("src/assets/bejeweled");
+		//	File dir = new File("src/assets/bejeweled");
+		this.gameName = this.gameName.toLowerCase().replace(" ", "-");
+			String filePath = "src/assets/"+this.gameName;
+			File dir = new File(filePath);
 			File[] directoryListing = dir.listFiles();
 			this.id = rand.nextInt(directoryListing.length);
 	      //  this.blockImage = ImageIO.read(new File("src/assets/bejeweled/blue_gem.png"));
