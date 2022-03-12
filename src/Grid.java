@@ -325,10 +325,10 @@ public class Grid extends JFrame {
         // Only accept the input separate by single comma "," no space afterwords
         if (checkInput == true) {
             String[] inputNum = input.split(",");
-            int numX = Integer.parseInt(inputNum[0]);
-            int numY = Integer.parseInt(inputNum[1]);
-            int num2X = Integer.parseInt(inputNum[2]);
-            int num2Y = Integer.parseInt(inputNum[3]);
+            int numX = Integer.parseInt(inputNum[0]) - 1;
+            int numY = Integer.parseInt(inputNum[1]) - 1;
+            int num2X = Integer.parseInt(inputNum[2]) - 1;
+            int num2Y = Integer.parseInt(inputNum[3]) - 1;
             System.out.print(inputNum[0] +" "+ inputNum[1]+" "+ inputNum[2]+" "+ inputNum[3]);
 
             // Get first coordinate component for second coordinate update
