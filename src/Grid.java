@@ -254,20 +254,69 @@ public class Grid extends JFrame {
             int numY = Integer.parseInt(inputNum[1]);
             int num2X = Integer.parseInt(inputNum[2]);
             int num2Y = Integer.parseInt(inputNum[3]);
+            System.out.print(inputNum[0] +" "+ inputNum[1]+" "+ inputNum[2]+" "+ inputNum[3]);
 
-            System.out.print(id[numX][numY] +" "+ id[num2X][num2Y]);
-            System.out.print(ImageBlock[numX][numY]);
+            // Get first coordinate component for second coordinate update
+            Component first = null;
+            Component[] componentList = panel_88[numX][numY].getComponents();
+            for(Component c : componentList){
+                if(c instanceof JLabel){
+                    first = c;
+                }
+            }
+
+            // Setting temp variable
+            int idtemp = id[numX][numY];
+            Image imageTemp = ImageBlock[numX][numY];
+            Block blockTemp = blockBlock[numX][numY];
+
+            // Remove first coordinates
+            removeBlock(numX, numY);
+            // Update first coordinates
+            addBlock(numX, numY, num2X, num2Y);
+
+            // Update 2D array for first coordinate
+            id[numX][numY] = id[num2X][num2Y];
+            ImageBlock[numX][numY] = ImageBlock[num2X][num2Y];
+            blockBlock[numX][numY] = blockBlock[num2X][num2Y];
+
+            // Remove second coordinates
+            removeBlock(num2X, num2Y);
+            // Update second coordinates
+            addSecondBlock(num2X, num2Y, numX, numY, first);
+
+            // Update 2D array for second coordinate
+            id[num2X][num2Y] = idtemp;
+            ImageBlock[num2X][num2Y] = imageTemp;
+            blockBlock[num2X][num2Y] = blockTemp;
 
 
-
-
-
-
-            System.out.println(panel_88[numX][numY]);
-            System.out.println(panel_88[num2X][num2Y]);
         }
 
     }
+    public void addSecondBlock (int x, int y, int x2, int y2, Component first) {
+        Component[] component1 = panel_88[x2][y2].getComponents();
+        for(Component c : component1){
+            if(c instanceof JLabel){
+                panel_88[x][y].add(first);
+            }
+        }
+        panel_88[x][y].revalidate();
+        panel_88[x][y].repaint();
+    }
+
+    public void addBlock (int x, int y, int x2, int y2) {
+        Component[] component1 = panel_88[x2][y2].getComponents();
+        for(Component c : component1){
+            if(c instanceof JLabel){
+                panel_88[x][y].add(c);
+            }
+        }
+        panel_88[x][y].revalidate();
+        panel_88[x][y].repaint();
+    }
+
+    // Shout out to leelannee!
     public void removeBlock(int x, int y){
         Component[] componentList = panel_88[x][y].getComponents();
         for(Component c : componentList){
