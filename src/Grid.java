@@ -26,7 +26,9 @@ public class Grid extends JFrame {
 
     JPanel[][] panel_88 = new JPanel[6][6];
 
-    Block myPicture = new Block();
+    int[][] id = new int[6][6];
+    Image[][] ImageBlock = new Image[6][6];
+    Block[][] blockBlock = new Block[6][6];
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -173,11 +175,15 @@ public class Grid extends JFrame {
         JPanel panel6 = new JPanel();
 
 
+
+
         for (int i = 0; i < panel_88.length; i++) {
+//            System.out.println("Outer Loop: " + panel_88.length +" " + i);
 
             switch (i) {
                 case 0:
                     drawGrid (i, panel_88, 0, 15, panel1);
+                    break;
                 case 1:
                     drawGrid (i, panel_88, 0, 115, panel2);
                     break;
@@ -193,16 +199,17 @@ public class Grid extends JFrame {
                 case 5:
                     drawGrid (i, panel_88, 0, 515, panel6);
                     break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
             }
+            System.out.println();
         }
+        System.out.println("Above are ID");
+
+//        for (int i = 0; i < id.length; i++) {
+//            for (int j = 0; j < id[i].length; j++) {
+//                System.out.print(id[i][j]);
+//            }
+//            System.out.println();
+//        }
 
     }
 
@@ -211,7 +218,10 @@ public class Grid extends JFrame {
         panel.setBounds(panelxValue, 15, 100, 600);
         contentPane.add(panel);
         panel.setLayout(null);
+        int count = 0;
+
         for (int j = 0; j < panel_88[i].length; j++) {
+//            System.out.print("InnerLoop: " + j);
             panel_88[i][j] = new JPanel();
             panel_88[i][j].setBackground(new Color(255, 255, 255));
             panel_88[i][j].setBorder(new LineBorder(new Color(0, 0, 0), 1));
@@ -220,17 +230,26 @@ public class Grid extends JFrame {
             panel88Value+=100;
             //adding image onto grid
 
+
+            Block myPicture = new Block();
             myPicture.setImage();
             Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
             JLabel picLabel = new JLabel(new ImageIcon(block));
-            System.out.println(myPicture.getID());
+            System.out.print(myPicture.getID());
+            id[i][count] = myPicture.getID();
+            ImageBlock[i][count] = block;
+            blockBlock[i][count] = myPicture;
             panel_88[i][j].add(picLabel);
+            count++;
         }
     }
+
 
     // Current Version Will Ask User to Type Two Coordinates at the same time. ex: 1,4,5,5
     // The Coordinates are (1,4)(5,5)
     public void swapImage (boolean checkInput, String input) {
+
+
         // Only accept the input separate by single comma "," no space afterwords
         if (checkInput == true) {
             String[] inputNum = input.split(",");
@@ -239,7 +258,11 @@ public class Grid extends JFrame {
             int num2X = Integer.parseInt(inputNum[2]);
             int num2Y = Integer.parseInt(inputNum[3]);
 
-            System.out.println(myPicture.getID());
+            System.out.print(id[numX][numY] +" "+ id[num2X][num2Y]);
+            System.out.print(ImageBlock[numX][numY]);
+
+
+
 
 
 
