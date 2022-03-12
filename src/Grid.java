@@ -1,13 +1,10 @@
-import java.awt.EventQueue;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Font;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
-import java.awt.Image;
 import javax.swing.Timer;
 
 // Needed to have a fixed dimension based on the game type
@@ -270,6 +267,16 @@ public class Grid extends JFrame {
             System.out.println(panel_88[num2X][num2Y]);
         }
 
+    }
+    public void removeBlock(int x, int y){
+        Component[] componentList = panel_88[x][y].getComponents();
+        for(Component c : componentList){
+            if(c instanceof JLabel){
+                panel_88[x][y].remove(c);
+            }
+        }
+        panel_88[x][y].revalidate();
+        panel_88[x][y].repaint();
     }
 
     private void timer(JLabel timeLabel) {
