@@ -24,10 +24,11 @@ public class Grid extends JFrame {
     public boolean checkInput;
     private Timer timer;
     private int seconds;
-
     JPanel[][] panel_88 = new JPanel[6][6];
 
-    Block myPicture = new Block();
+    
+    
+    private Block[][] blocks;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -173,7 +174,7 @@ public class Grid extends JFrame {
         JPanel panel5 = new JPanel();
         JPanel panel6 = new JPanel();
 
-
+        this.blocks = new Block[6][6];
         for (int i = 0; i < panel_88.length; i++) {
             switch (i) {
                 case 0:
@@ -204,9 +205,131 @@ public class Grid extends JFrame {
                     break;
             }
         }
+        printBlocks();
+        System.out.println(checkAvailableMoves());
+//        printBlocks();
 
     }
-
+    
+    private boolean checkRight(int i, int j) {
+    	Block temp = this.blocks[i][j];
+    	this.blocks[i][j] = this.blocks[i][j+1];
+		this.blocks[i][j+1] = temp;
+//		printBlocks();
+		//return [INSERT CHECK VALID FUNCTION]
+		
+		//swap back
+		this.blocks[i][j+1] = this.blocks[i][j];
+		this.blocks[i][j] = temp;
+//		printBlocks();
+		return false;
+    }
+    private boolean checkLeft(int i, int j) {
+    	Block temp = this.blocks[i][j];
+    	this.blocks[i][j] = this.blocks[i][j-1];
+		this.blocks[i][j-1] = temp;
+//		printBlocks();
+		//return [INSERT CHECK VALID FUNCTION]
+		
+		//swap back
+		this.blocks[i][j-1] = this.blocks[i][j];
+		this.blocks[i][j] = temp;
+//		printBlocks();
+		return false;
+    }
+    
+    private boolean checkBottom(int i, int j) {
+    	Block temp = this.blocks[i][j];
+    	this.blocks[i][j] = this.blocks[i+1][j];
+		this.blocks[i+1][j] = temp;
+//		printBlocks();
+		//return [INSERT CHECK VALID FUNCTION]
+		
+		//swap back
+		this.blocks[i+1][j] = this.blocks[i][j];
+		this.blocks[i][j] = temp;
+//		printBlocks();
+		return false;
+    }
+    
+    private boolean checkTop(int i, int j) {
+    	Block temp = this.blocks[i][j];
+    	this.blocks[i][j] = this.blocks[i-1][j];
+		this.blocks[i-1][j] = temp;
+//		printBlocks();
+		//return [INSERT CHECK VALID FUNCTION]
+		
+		//swap back
+		this.blocks[i-1][j] = this.blocks[i][j];
+		this.blocks[i][j] = temp;
+//		printBlocks();
+		return false;
+    }
+    
+    
+    
+    private boolean checkAvailableMoves() {
+    	
+    	for (int i=0; i<this.blocks.length; i++) {
+    		for (int j=0; j<this.blocks[i].length;j++) {
+    			System.out.println("block" + i + " " + j);
+    			Block current = this.blocks[i][j];
+    			if (i==0) { //top row
+    				if (j==0) { //left bound
+    					if (checkRight(i,j)) return true;
+    					if (checkBottom(i,j)) return true;
+    				} else if (j==this.blocks[i].length-1) { //right bound
+    					if (checkLeft(i,j)) return true;
+    					if (checkBottom(i,j)) return true;
+    				} else { //middle blocks
+    					if (checkLeft(i,j)) return true;
+    					if (checkRight(i,j)) return true;
+    					if (checkBottom(i,j)) return true;
+    				}
+    			}
+    			else if (i==this.blocks.length-1) { //bottom row
+    				if (j==0) { //left bound
+    					if (checkRight(i,j)) return true;
+    					if (checkTop(i,j)) return true;
+    				} else if (j==this.blocks[i].length-1) { //right bound
+    					if (checkLeft(i,j)) return true;
+    					if (checkTop(i,j)) return true;
+    				} else { //middle blocks
+    					if (checkLeft(i,j)) return true;
+    					if (checkRight(i,j)) return true;
+    					if (checkTop(i,j)) return true;
+    				}
+    			} else { //middle row
+    				if (j==0) {
+    					if (checkRight(i,j)) return true;
+    					if (checkTop(i,j)) return true;
+    					checkBottom(i,j);
+    				} else if (j==this.blocks[i].length-1) {
+    					if (checkLeft(i,j)) return true;
+    					if (checkTop(i,j)) return true;
+    					if (checkBottom(i,j)) return true;
+    				} else {
+    					if (checkLeft(i,j)) return true;
+    					if (checkRight(i,j)) return true;
+    					if (checkTop(i,j)) return true;
+    					if (checkBottom(i,j)) return true;
+    				}
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
+    private void printBlocks() {
+    	for (Block[] x: this.blocks) {
+        	for (Block y: x) {
+//        		System.out.print(y.getRow() + " " + y.getCol() + ", " );
+        		System.out.print(y.getID() + ", " );
+        	}
+        	System.out.println();
+        }
+    	System.out.println();
+    }
     // Draw necessary panel
     public void drawGrid (int i, JPanel panel_88[][], int panel88Value, int panelxValue, JPanel panel) {
         panel.setBounds(panelxValue, 15, 100, 600);
@@ -220,11 +343,16 @@ public class Grid extends JFrame {
             panel.add(panel_88[i][j]);
             panel88Value+=100;
             //adding image onto grid
+            Block myPicture = new Block();
             myPicture.setImage();
+            myPicture.setCol(i);
+            myPicture.setRow(j);
             Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
             JLabel picLabel = new JLabel(new ImageIcon(block));
-            System.out.println(myPicture.getID());
+//            System.out.println(myPicture.getID());
             panel_88[i][j].add(picLabel);
+            
+            this.blocks[j][i] = myPicture;
             
         }
     }
@@ -240,7 +368,7 @@ public class Grid extends JFrame {
             int num2X = Integer.parseInt(inputNum[2]);
             int num2Y = Integer.parseInt(inputNum[3]);
 
-            System.out.println(myPicture.getID());
+//            System.out.println(myPicture.getID());
 
 
 
