@@ -390,7 +390,6 @@ public class Grid extends JFrame {
         panel_88[x][y].repaint();
     }
 
-    // Shout out to leelannee!
     public void removeBlock(int x, int y){
         Component[] componentList = panel_88[x][y].getComponents();
         for(Component c : componentList){

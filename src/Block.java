@@ -6,11 +6,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class Block {
-	private int length;
-	private int width;
 	private BufferedImage blockImage;
-	private int row;
-	private int col;
 	private int id;
 	private String gameName;
 
@@ -19,12 +15,6 @@ public class Block {
 	}
 	public int getID(){
 		return this.id;
-	}
-	public void setLength(int length){
-		this.length = length;
-	}
-	public void setWidth(int width){
-		this.width = width;
 	}
 	public void setImage(){
 		Random rand = new Random();
@@ -41,27 +31,8 @@ public class Block {
 	            // handle exception...
 	       }
 	}
-	public void setRow(int row){
-		this.row = row;
-	}
-	public void setCol(int col){
-		this.col = col;
-	}
 
-
-	public int getLength(){
-		return this.length;
-	}
-	public int getWidth(){
-		return this.width;
-	}
 	public BufferedImage getBlockImage(){
 		return this.blockImage;
-	}
-	public int getRow(){
-		return this.row;
-	}
-	public int getCol(){
-		return this.col;
 	}
 }
