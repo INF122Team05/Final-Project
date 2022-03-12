@@ -24,6 +24,10 @@ public class Grid extends JFrame {
     private Timer timer;
     private int seconds;
 
+    JPanel[][] panel_88 = new JPanel[6][6];
+
+    Block myPicture = new Block();
+
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -144,6 +148,7 @@ public class Grid extends JFrame {
                     System.out.println(input);
                     userInput = input;
                     checkInput = true;
+                    swapImage(checkInput, input);
                 }
             }
         });
@@ -160,52 +165,50 @@ public class Grid extends JFrame {
         panel.add(textContent);
 
 
-        JPanel[][] panel_88 = new JPanel[8][8];
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
         JPanel panel3 = new JPanel();
         JPanel panel4 = new JPanel();
         JPanel panel5 = new JPanel();
         JPanel panel6 = new JPanel();
-        JPanel panel7 = new JPanel();
-        JPanel panel8 = new JPanel();
 
 
         for (int i = 0; i < panel_88.length; i++) {
+
             switch (i) {
-                case 1:
+                case 0:
                     drawGrid (i, panel_88, 0, 15, panel1);
-                    break;
-                case 2:
+                case 1:
                     drawGrid (i, panel_88, 0, 115, panel2);
                     break;
-                case 3:
+                case 2:
                     drawGrid (i, panel_88, 0, 215, panel3);
                     break;
-                case 4:
+                case 3:
                     drawGrid (i, panel_88, 0, 315, panel4);
                     break;
-                case 5:
+                case 4:
                     drawGrid (i, panel_88, 0, 415, panel5);
                     break;
-                case 6:
+                case 5:
                     drawGrid (i, panel_88, 0, 515, panel6);
                     break;
+                case 6:
+                    break;
                 case 7:
-                    drawGrid (i, panel_88, 0, 615, panel7);
                     break;
                 case 8:
-                    drawGrid (i, panel_88, 0, 715, panel8);
                     break;
                 case 9:
                     break;
             }
         }
+
     }
 
     // Draw necessary panel
     public void drawGrid (int i, JPanel panel_88[][], int panel88Value, int panelxValue, JPanel panel) {
-        panel.setBounds(panelxValue, 15, 100, 800);
+        panel.setBounds(panelxValue, 15, 100, 600);
         contentPane.add(panel);
         panel.setLayout(null);
         for (int j = 0; j < panel_88[i].length; j++) {
@@ -216,13 +219,36 @@ public class Grid extends JFrame {
             panel.add(panel_88[i][j]);
             panel88Value+=100;
             //adding image onto grid
-            Block myPicture = new Block();
+
             myPicture.setImage();
             Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
             JLabel picLabel = new JLabel(new ImageIcon(block));
+            System.out.println(myPicture.getID());
             panel_88[i][j].add(picLabel);
         }
     }
+
+    // Current Version Will Ask User to Type Two Coordinates at the same time. ex: 1,4,5,5
+    // The Coordinates are (1,4)(5,5)
+    public void swapImage (boolean checkInput, String input) {
+        // Only accept the input separate by single comma "," no space afterwords
+        if (checkInput == true) {
+            String[] inputNum = input.split(",");
+            int numX = Integer.parseInt(inputNum[0]);
+            int numY = Integer.parseInt(inputNum[1]);
+            int num2X = Integer.parseInt(inputNum[2]);
+            int num2Y = Integer.parseInt(inputNum[3]);
+
+            System.out.println(myPicture.getID());
+
+
+
+            System.out.println(panel_88[numX][numY]);
+            System.out.println(panel_88[num2X][num2Y]);
+        }
+
+    }
+
     private void timer(JLabel timeLabel) {
         timer = new Timer(1000, new ActionListener() {
             @Override
