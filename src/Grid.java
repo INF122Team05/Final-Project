@@ -1,14 +1,10 @@
-import java.awt.EventQueue;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
-import java.awt.Image;
 import javax.swing.Timer;
 
 // Needed to have a fixed dimension based on the game type
@@ -24,10 +20,13 @@ public class Grid extends JFrame {
     public boolean checkInput;
     private Timer timer;
     private int seconds;
+    private String gameSelect;
 
     JPanel[][] panel_88 = new JPanel[6][6];
 
-    Block myPicture = new Block();
+    int[][] id = new int[6][6];
+    Image[][] ImageBlock = new Image[6][6];
+    Block[][] blockBlock = new Block[6][6];
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -166,6 +165,47 @@ public class Grid extends JFrame {
         panel.add(textContent);
 
 
+        // User input GAME NAME
+        JLabel namePrompt = new JLabel();
+        namePrompt.setBounds(25, 300, 150, 20);
+        namePrompt.setFont(new Font("Arial", Font.PLAIN, 15));
+        namePrompt.setText("Enter a game name:");
+        JTextField gameName = new JTextField(30);
+        gameName.setBounds(25, 330, 150, 20);
+        // User input Enter button
+        JButton nameButton = new JButton("Enter");
+        nameButton.setFont(new Font("Sylfaen", Font.HANGING_BASELINE, 15));
+        nameButton.setBounds(65, 360, 70, 25);
+        nameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == nameButton){
+                    // Input by click on the button
+                    String input = gameName.getText();
+                    gameSelect = input;
+                    System.out.println(input);
+                    userInput = input;
+                    checkInput = true;
+                    addImages(input);
+                }
+            }
+        });
+
+        gameName.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Input from User
+                String input = gameName.getText();
+                System.out.println(input);
+            }
+        });
+        panel.add(nameButton);
+        panel.add(gameName);
+        panel.add(namePrompt);
+
+
+
+
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
         JPanel panel3 = new JPanel();
@@ -174,7 +214,11 @@ public class Grid extends JFrame {
         JPanel panel6 = new JPanel();
 
 
+
+
         for (int i = 0; i < panel_88.length; i++) {
+//            System.out.println("Outer Loop: " + panel_88.length +" " + i);
+
             switch (i) {
                 case 0:
                     drawGrid (i, panel_88, 0, 15, panel1);
@@ -194,16 +238,17 @@ public class Grid extends JFrame {
                 case 5:
                     drawGrid (i, panel_88, 0, 515, panel6);
                     break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
             }
+            System.out.println();
         }
+        System.out.println("Above are ID");
+
+//        for (int i = 0; i < id.length; i++) {
+//            for (int j = 0; j < id[i].length; j++) {
+//                System.out.print(id[i][j]);
+//            }
+//            System.out.println();
+//        }
 
     }
 
@@ -212,26 +257,65 @@ public class Grid extends JFrame {
         panel.setBounds(panelxValue, 15, 100, 600);
         contentPane.add(panel);
         panel.setLayout(null);
+
         for (int j = 0; j < panel_88[i].length; j++) {
+//            System.out.print("InnerLoop: " + j);
             panel_88[i][j] = new JPanel();
             panel_88[i][j].setBackground(new Color(255, 255, 255));
             panel_88[i][j].setBorder(new LineBorder(new Color(0, 0, 0), 1));
             panel_88[i][j].setBounds(0, panel88Value, 100, 100);
             panel.add(panel_88[i][j]);
             panel88Value+=100;
-            //adding image onto grid
-            myPicture.setImage();
-            Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
-            JLabel picLabel = new JLabel(new ImageIcon(block));
-            System.out.println(myPicture.getID());
-            panel_88[i][j].add(picLabel);
-            
         }
     }
+
+    public void addImage(String name, int i, int j){
+        Block myPicture = new Block(name);
+        myPicture.setImage();
+        Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
+        JLabel picLabel = new JLabel(new ImageIcon(block));
+        System.out.println(myPicture.getID());
+        id[i][j] = myPicture.getID();
+        ImageBlock[i][j] = block;
+        blockBlock[i][j] = myPicture;
+        panel_88[i][j].add(picLabel);
+    }
+    public void addImages(String name){
+        for (int i = 0; i < panel_88.length; i++){
+            for (int j = 0; j < panel_88[i].length; j++){
+                addImage(name, i, j);
+            }
+        }
+    }
+
+    // Call to update the grid after blocks have been removed following a match
+    public void updateGrid(){
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 6; j++){
+                if (id[i][j] == -1){
+                    int tempj = j;
+                    while (tempj > 0){
+                        
+                        removeBlock(i, tempj);
+                        addBlock(i, tempj, i, tempj-1);
+                        id[i][tempj] = id[i][tempj-1];
+                    //      System.out.println("ID:["+i+"]"+"["+tempj+"] = "+ id[i][tempj]);
+                        ImageBlock[i][tempj] = ImageBlock[i][tempj-1];
+                        blockBlock[i][tempj] = blockBlock[i][tempj-1];
+                        tempj--;
+                    }
+                    addImage(this.gameSelect, i,tempj);
+                }
+            }
+        }
+    }
+
 
     // Current Version Will Ask User to Type Two Coordinates at the same time. ex: 1,4,5,5
     // The Coordinates are (1,4)(5,5)
     public void swapImage (boolean checkInput, String input) {
+
+
         // Only accept the input separate by single comma "," no space afterwords
         if (checkInput == true) {
             String[] inputNum = input.split(",");
@@ -239,24 +323,79 @@ public class Grid extends JFrame {
             int numY = Integer.parseInt(inputNum[1]);
             int num2X = Integer.parseInt(inputNum[2]);
             int num2Y = Integer.parseInt(inputNum[3]);
+            System.out.print(inputNum[0] +" "+ inputNum[1]+" "+ inputNum[2]+" "+ inputNum[3]);
 
-            System.out.println(myPicture.getID());
+            // Get first coordinate component for second coordinate update
+            Component first = null;
+            Component[] componentList = panel_88[numX][numY].getComponents();
+            for(Component c : componentList){
+                if(c instanceof JLabel){
+                    first = c;
+                }
+            }
+        
+            // Setting temp variable
+            int idtemp = id[numX][numY];
+            Image imageTemp = ImageBlock[numX][numY];
+            Block blockTemp = blockBlock[numX][numY];
+
+            // Remove first coordinates
+            removeBlock(numX, numY);
+            // Update first coordinates
+            addBlock(numX, numY, num2X, num2Y);
+
+            // Update 2D array for first coordinate
+            id[numX][numY] = id[num2X][num2Y];
+            ImageBlock[numX][numY] = ImageBlock[num2X][num2Y];
+            blockBlock[numX][numY] = blockBlock[num2X][num2Y];
+
+            // Remove second coordinates
+            removeBlock(num2X, num2Y);
+            // Update second coordinates
+            addSecondBlock(num2X, num2Y, numX, numY, first);
+
+            // Update 2D array for second coordinate
+            id[num2X][num2Y] = idtemp;
+            ImageBlock[num2X][num2Y] = imageTemp;
+            blockBlock[num2X][num2Y] = blockTemp;
 
 
-
-            System.out.println(panel_88[numX][numY]);
-            System.out.println(panel_88[num2X][num2Y]);
         }
 
     }
+    public void addSecondBlock (int x, int y, int x2, int y2, Component first) {
+        Component[] component1 = panel_88[x2][y2].getComponents();
+        for(Component c : component1){
+            if(c instanceof JLabel){
+                panel_88[x][y].add(first);
+            }
+        }
+        panel_88[x][y].revalidate();
+        panel_88[x][y].repaint();
+    }
 
+    public void addBlock (int x, int y, int x2, int y2) {
+        Component[] component1 = panel_88[x2][y2].getComponents();
+        for(Component c : component1){
+            if(c instanceof JLabel){
+                panel_88[x][y].add(c);
+            }
+        }
+        panel_88[x][y].revalidate();
+        panel_88[x][y].repaint();
+    }
+
+    // Shout out to leelannee!
     public void removeBlock(int x, int y){
         Component[] componentList = panel_88[x][y].getComponents();
         for(Component c : componentList){
-                if(c instanceof JLabel){
-                    panel_88[x][y].remove(c);
-                }
-        }   
+            if(c instanceof JLabel){
+                panel_88[x][y].remove(c);
+            }
+        }
+        id[x][y] = -1;
+        ImageBlock[x][y] = null;
+        blockBlock[x][y] = null;
         panel_88[x][y].revalidate();
         panel_88[x][y].repaint();
     }
