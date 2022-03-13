@@ -149,7 +149,7 @@ public class Grid extends JFrame {
                 if (e.getSource() == button){
                     // Input by click on the button
                     String input = textContent.getText();
-                    System.out.println(input);
+                 //   System.out.println(input);
                     userInput = input;
                     checkInput = true;
                 }
@@ -278,7 +278,7 @@ public class Grid extends JFrame {
         myPicture.setImage();
         Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
         JLabel picLabel = new JLabel(new ImageIcon(block));
-        System.out.println(myPicture.getID());
+      //  System.out.println(myPicture.getID());
         id[i][j] = myPicture.getID();
         ImageBlock[i][j] = block;
         blockBlock[i][j] = myPicture;
