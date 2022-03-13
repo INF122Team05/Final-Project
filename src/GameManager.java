@@ -24,9 +24,10 @@ public class GameManager {
 		return null;
 	}
 	
-	
 	// Adds a game to the Games list
-	public void addGame(Game game) {
-		this.games.add(game);
+	public void addGame(String name) {
+		Game g = new Game(name);
+		this.games.add(g);
 	}
+
 }
