@@ -22,7 +22,8 @@ public class UserManager
         }
         else
         {
-            System.out.println("Fail to login.");
+            addUser(name);
+            System.out.println("User account created, please login again.");
         }
 
         return login;
