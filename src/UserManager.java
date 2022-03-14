@@ -5,7 +5,7 @@ public class UserManager
     // String username;
     List<String> users;
 
-    public void userManager() 
+    public UserManager() 
     {
         //Type your code
         users = new ArrayList<String>();
@@ -22,7 +22,8 @@ public class UserManager
         }
         else
         {
-            System.out.println("Fail to login.");
+            addUser(name);
+            System.out.println("User account created, please login again.");
         }
 
         return login;
