@@ -1,16 +1,19 @@
+import java.util.Map;
+
 public class GameRules {
     private int totalTime;
     private String description;
+    private Map<Integer, Integer> scoreMap;
 
-    public GameRules(int totalTime){
-        this.totalTime = totalTime;    
+    public GameRules(int totalTime, String description, Map<Integer, Integer> scoreMap){
+        this.totalTime = totalTime;
+        this.description = description;
+        this.scoreMap = scoreMap;
     }
 
-    public int scoreCalculation(){
-        // not implemented yet
-        // felt like this made more sense as a method
-        // when should this be called?
-        return 0;
+    /** This method returns the score values for each number of matching blocks in a row **/
+    public Map<Integer, Integer> getScoreMap() {
+        return scoreMap;
     }
 
     /** This method returns the max amount of time a game should last**/
