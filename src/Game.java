@@ -4,7 +4,7 @@ public class Game {
     private int score;
     // private Timer timer = new Timer(); 
 
-    public Game(){
+    public Game(String name){
         setName(name);
         setScore(score);
     }
