@@ -5,7 +5,7 @@ public class UserManager
     // String username;
     List<String> users;
 
-    public void userManager() 
+    public UserManager() 
     {
         //Type your code
         users = new ArrayList<String>();
