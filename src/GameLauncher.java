@@ -1,20 +1,26 @@
 import java.util.*;
 
-public class GameLauncher {
+public class GameLauncher{
 
     private UserManager users;
     private GameEngine engine;
     private GameManager gameList;
 
-    public GameLauncher(){
+    public GameLauncher() 
+    {
+        users = new UserManager();
+        gameList = new GameManager();
         
-        
+        gameList.addGame("Candy Crush");
+        gameList.addGame("Bejeweled");
+
         String user_name = promptUserName();
         if (users.login(user_name))
         {
+            System.out.println("Login Successful");
             System.out.println("*** Game List ***");
             showGames();
-            engine.run();
+            // engine.run(); 
         }
         else
         {
@@ -24,8 +30,6 @@ public class GameLauncher {
 
     public void showGames()
     {
-        gameList.addGame("Candy Crush");
-        gameList.addGame("Bejeweled");
         for (Game g : gameList.getGames())
         {
             System.out.println(g.getName());
@@ -36,13 +40,10 @@ public class GameLauncher {
     {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Please Enter User Name: ");
-        String name = input.nextLine();
-        users.addUser(name);
-
+        System.out.print("Please Enter User Name: ");
+        String name = input.next();
         input.close();
 
         return name;
     }
-
 }

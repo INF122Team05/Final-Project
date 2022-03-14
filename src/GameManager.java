@@ -27,7 +27,20 @@ public class GameManager {
 	// Adds a game to the Games list
 	public void addGame(String name) {
 		Game g = new Game(name);
-		this.games.add(g);
+
+		if (games.isEmpty())
+		{
+			games = new ArrayList<Game>();
+			games.add(g);
+		}
+		else
+		{
+			if (games.contains(g))
+				System.out.println("Game already exist.");
+			else
+				games.add(g);
+		}
+		
 	}
 
 }
