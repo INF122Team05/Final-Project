@@ -17,10 +17,13 @@ public class Grid extends JFrame {
     private JPanel contentPane;
     private JTextField textContent;
     public String userInput;
+    public GameTimer timer;
     public boolean checkInput;
-    private Timer timer;
-    private int seconds;
     private String gameSelect;
+    public int score;
+    private JLabel scoreLabel;
+    private JLabel timerLabel;
+    private int totalTime;
 
     JPanel[][] panel_88 = new JPanel[6][6];
 
@@ -28,18 +31,18 @@ public class Grid extends JFrame {
     Image[][] ImageBlock = new Image[6][6];
     Block[][] blockBlock = new Block[6][6];
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Grid frame = new Grid();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//                    Grid frame = new Grid();
+//                    frame.setVisible(true);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,11 +56,14 @@ public class Grid extends JFrame {
         );
         pack();
     }
-    public Grid() {
+    public Grid(int totalTime) {
         setFont(new Font("Sylfaen", Font.BOLD, 16));
         setTitle("TMGE");
         setBackground(new Color(152, 251, 152));
         initComponentss();
+        score = 0;
+        this.totalTime = totalTime;
+        timer = new GameTimer(totalTime);
     }
 
 
@@ -93,21 +99,29 @@ public class Grid extends JFrame {
         panel.setLayout(null);
 
         // Timer Label
-        JLabel timerLabel = new JLabel("");
+        timerLabel = new JLabel("0");
         timerLabel.setBounds(25, 250, 150, 60);
         timerLabel.setHorizontalAlignment(JLabel.CENTER);
         panel.add(timerLabel);
         timerLabel.setFont(new Font("Arial", Font.PLAIN, 70));
 
+        // Score Label
+        scoreLabel = new JLabel("");
+        scoreLabel.setBounds(25,300,150,60);
+        scoreLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(scoreLabel);
+        scoreLabel.setFont(new Font("Arial", Font.PLAIN, 25));
+        scoreLabel.setText("Score: " + score);
+
         // User input Stop button
-        JButton stopButton = new JButton("Stop");
+        JButton stopButton = new JButton("End");
         stopButton.setFont(new Font("Sylfaen", Font.CENTER_BASELINE, 35));
         stopButton.setBounds(25, 100, 150, 50);
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == stopButton){
-                    timer.stop();
+                    timer.setTime(1);
                 }
             }
         });
@@ -122,8 +136,7 @@ public class Grid extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == startButton){
-                    timer(timerLabel);
-                    timer.start();
+                    timer.runTimer();
                 }
             }
         });
@@ -171,15 +184,15 @@ public class Grid extends JFrame {
 
         // User input GAME NAME
         JLabel namePrompt = new JLabel();
-        namePrompt.setBounds(25, 330, 150, 20);
+        namePrompt.setBounds(25, 360, 150, 20);
         namePrompt.setFont(new Font("Arial", Font.PLAIN, 15));
         namePrompt.setText("Enter a game name:");
         JTextField gameName = new JTextField(30);
-        gameName.setBounds(25, 350, 150, 20);
+        gameName.setBounds(25, 380, 150, 20);
         // User input Enter button
         JButton nameButton = new JButton("Enter");
         nameButton.setFont(new Font("Sylfaen", Font.HANGING_BASELINE, 15));
-        nameButton.setBounds(65, 380, 70, 25);
+        nameButton.setBounds(65, 410, 70, 25);
         nameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -243,9 +256,9 @@ public class Grid extends JFrame {
                     drawGrid (i, panel_88, 0, 515, panel6);
                     break;
             }
-           // System.out.println();
+            // System.out.println();
         }
-       // System.out.println("Above are ID");
+        // System.out.println("Above are ID");
 
 //        for (int i = 0; i < id.length; i++) {
 //            for (int j = 0; j < id[i].length; j++) {
@@ -299,11 +312,11 @@ public class Grid extends JFrame {
                 if (id[i][j] == -1){
                     int tempj = j;
                     while (tempj > 0){
-                        
+
                         removeBlock(i, tempj);
                         addBlock(i, tempj, i, tempj-1);
                         id[i][tempj] = id[i][tempj-1];
-                    //      System.out.println("ID:["+i+"]"+"["+tempj+"] = "+ id[i][tempj]);
+                        //      System.out.println("ID:["+i+"]"+"["+tempj+"] = "+ id[i][tempj]);
                         ImageBlock[i][tempj] = ImageBlock[i][tempj-1];
                         blockBlock[i][tempj] = blockBlock[i][tempj-1];
                         tempj--;
@@ -337,7 +350,7 @@ public class Grid extends JFrame {
                     first = c;
                 }
             }
-        
+
             // Setting temp variable
             int idtemp = id[numX][numY];
             Image imageTemp = ImageBlock[numX][numY];
@@ -367,7 +380,7 @@ public class Grid extends JFrame {
         }
 
     }
-    
+
     public void addSecondBlock (int x, int y, int x2, int y2, Component first) {
         Component[] component1 = panel_88[x2][y2].getComponents();
         for(Component c : component1){
@@ -404,39 +417,31 @@ public class Grid extends JFrame {
         panel_88[x][y].repaint();
     }
 
-    private void timer(JLabel timeLabel) {
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (seconds >= 300) {
-                    timeLabel.setFont(new Font("Arial", Font.PLAIN, 30));
-                    timeLabel.setText("Time Over");
-                    timer.stop();
-                }
-                else{
-                    seconds++;
-                    timeLabel.setText("" + seconds);
-                }
-
-            }
-        });
-
+    public void updateScore(int score){
+        this.score += score;
+        scoreLabel.setText("Score: " + this.score);
     }
 
-
-
-
-    private void newGameActionPerformed(ActionEvent evt) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Grid frame = new Grid();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    public void updateTimer(){
+        timerLabel.setText("" + timer.getTimeRemaining());
     }
+
+//    private void timer(JLabel timeLabel) {
+//        timer = new Timer(1000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if (seconds >= 300) {
+//                    timeLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+//                    timeLabel.setText("Time Over");
+//                    timer.stop();
+//                }
+//                else{
+//                    seconds++;
+//                    timeLabel.setText("" + seconds);
+//                }
+//
+//            }
+//        });
+//
+//    }
 }

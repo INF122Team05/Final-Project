@@ -1,7 +1,12 @@
-import java.util.Timer;
+import javax.swing.Timer;
+
+import java.util.Scanner;
 import java.util.TimerTask;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameTimer {
+    private Timer test_timer;
     public int time;
 
     public GameTimer(int totalTime){
@@ -17,10 +22,10 @@ public class GameTimer {
     public void setTime(int newTime){
         this.time = newTime;
     }
-    
+
     /** This method starts the timer and prints the amount of time left **/
     public void runTimer(){
-        Timer timer = new Timer();
+        java.util.Timer timer = new java.util.Timer();
         TimerTask task = new TimerTask()
         {
             @Override
@@ -32,17 +37,11 @@ public class GameTimer {
                     timer.cancel();
                     timer.purge();
                 }
-                else
-                    System.out.println("Time left:" + time);
-                    time -= 1;
+                time -= 1;
             }
         };
         // runs the task each second
         timer.schedule(task, 0, 1000);
     }
 
-    public static void main(String[] args){
-        GameTimer gameTimer = new GameTimer(10);
-        gameTimer.runTimer();
-    }    
 }

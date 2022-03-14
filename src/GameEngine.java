@@ -3,23 +3,21 @@ import java.util.ArrayList;
 
 public abstract class GameEngine extends Thread {
     private Grid grid;
-    private GameTimer timer;
-    private String gameDescription;
+    private GameRules rules;
 
     // These hold the temporary selections by the user
     private String selection;
 
     public GameEngine(GameRules rules){
+        this.rules = rules;
         buildGame();
-        timer = new GameTimer(rules.getTotalTime());
-        gameDescription = rules.getDescription();
         selection = "";
     }
 
     /** This method builds the GUI of the game **/
     private void buildGame(){
         try {
-            grid = new Grid();
+            grid = new Grid(rules.getTotalTime());
             grid.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,8 +28,19 @@ public abstract class GameEngine extends Thread {
     private void updateBlocks(ArrayList<Point> coords){
         for(Point coord : coords){
             grid.removeBlock(coord.x, coord.y);
-            // Count a score here
         }
+        // Count score
+        System.out.println("That move had a total of " + coords.size() + " blocks");
+        System.out.println("Therefore, that equals " + rules.getScoreMap().get(coords.size()) + " points");
+        var scoreToAdd = rules.getScoreMap().get(coords.size());
+        if (scoreToAdd == null){
+            System.out.println("No score value for this move, defaulting to 100 points");
+            grid.updateScore(100);
+        }
+        else{
+            grid.updateScore(rules.getScoreMap().get(coords.size()));
+        }
+
         grid.updateGrid();
     }
 
@@ -81,10 +90,20 @@ public abstract class GameEngine extends Thread {
         if (longestMoveLeftRight.isEmpty() && longestMoveTopDown.isEmpty()){return null;}
         else {
             if (longestMoveLeftRight.size() > longestMoveTopDown.size()){
+                System.out.println("Blocks to move:");
+                for (Point p : longestMoveLeftRight){
+                    System.out.println("(" + p.x + ", " + p.y + ")");
+                }
+
                 longestMoveLeftRight.add(new Point(x,y));
                 return longestMoveLeftRight;
             }
             else{
+                System.out.println("Blocks to move:");
+                for (Point p : longestMoveTopDown){
+                    System.out.println("(" + p.x + ", " + p.y + ")");
+                }
+
                 longestMoveTopDown.add(new Point(x,y));
                 return longestMoveTopDown;
             }
@@ -128,10 +147,10 @@ public abstract class GameEngine extends Thread {
                 else{
                     grid.swapImage(true, move);
                     try{sleep(1000);}catch (InterruptedException e){System.out.println("Failed to sleep");}
-                    if (blocksToChangeMain != null){
+                    if (blocksToChangeMain != null && blocksToChangeMain.size() > 2){
                         updateBlocks(blocksToChangeMain);
                     }
-                    if (blocksToChangeSelected != null){
+                    if (blocksToChangeSelected != null && blocksToChangeSelected.size() > 2){
                         updateBlocks(blocksToChangeSelected);
                     }
                     return true;
@@ -157,10 +176,9 @@ public abstract class GameEngine extends Thread {
 
     /** This method provides a default runnable game **/
     public boolean runGame(){
-        timer.runTimer();
-
-        while(timer.getTimeRemaining() != 0){
+        while(grid.timer.getTimeRemaining() != 0){
             try{sleep(1000);}catch (InterruptedException e){}
+            grid.updateTimer();
             if (grid.checkInput) {
                 // End game
                 if (grid.userInput.equals("end")){
@@ -188,6 +206,12 @@ public abstract class GameEngine extends Thread {
 
     @Override
     public void run(){
-        runGame();
+        if (runGame()){
+            System.out.println("Congrats! You beat the game with a total score of: " + grid.score);
+        }
+        else{
+            System.out.println("Game Over! You finished the game with a total score of: " + grid.score);
+        }
+        grid.setVisible(false);
     }
 }
