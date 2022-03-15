@@ -1,3 +1,5 @@
+package core;
+
 import java.util.Map;
 
 public class GameRules {

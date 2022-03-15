@@ -1,3 +1,5 @@
+package core;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -5,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 
 // Needed to have a fixed dimension based on the game type
 // Num representing the Game
