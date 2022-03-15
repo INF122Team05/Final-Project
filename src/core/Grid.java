@@ -163,7 +163,7 @@ public class Grid extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Input from User
                 String input = textContent.getText();
-                System.out.println(input);
+                //System.out.println(input);
             }
         });
         panel.add(button);
@@ -202,7 +202,7 @@ public class Grid extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Input from User
                 String input = gameName.getText();
-                System.out.println(input);
+                //System.out.println(input);
             }
         });
         panel.add(nameButton);
@@ -316,7 +316,7 @@ public class Grid extends JFrame {
             int numY = Integer.parseInt(inputNum[1]) - 1;
             int num2X = Integer.parseInt(inputNum[2]) - 1;
             int num2Y = Integer.parseInt(inputNum[3]) - 1;
-            System.out.print(inputNum[0] +" "+ inputNum[1]+" "+ inputNum[2]+" "+ inputNum[3]);
+            //System.out.print(inputNum[0] +" "+ inputNum[1]+" "+ inputNum[2]+" "+ inputNum[3]);
 
             // Get first coordinate component for second coordinate update
             Component first = null;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class GameManager {
 	List<Game> games;
 	
-	GameManager() {
+	public GameManager() {
 		this.games = new ArrayList<Game>();
 	}
 	
