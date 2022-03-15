@@ -19,7 +19,7 @@ public class Launcher {
         scoreMap.put(4,20);
         scoreMap.put(5,30);
         scoreMap.put(6,50);
-        CandyCrush game = new CandyCrush(new GameRules(100, "CandyCrush Game", scoreMap));
+        CandyCrush game = new CandyCrush(new GameRules(100, "candy crush", scoreMap));
         game.start();
     }
 }

@@ -189,11 +189,15 @@ public abstract class GameEngine extends Thread {
                 }
                 // Selection
                 else if (!grid.userInput.isEmpty()) {
+                    if (grid.userInput.toLowerCase().equals(rules.getDescription())){
+                        System.out.println("Game Loaded!");
+                    }
                     // User provides input: #,#,#,#
                     // Verify valid input
-                    if (checkAndMakeMove(grid.userInput)) {
+                    else if (checkAndMakeMove(grid.userInput)) {
                         System.out.println("Move made");
-                    } else {
+                    }
+                    else {
                         // Display error: Invalid move
                         System.out.println("Invalid move");
                     }
