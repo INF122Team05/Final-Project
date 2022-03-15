@@ -32,18 +32,6 @@ public class Grid extends JFrame {
     Image[][] ImageBlock = new Image[6][6];
     Block[][] blockBlock = new Block[6][6];
 
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    Grid frame = new Grid();
-//                    frame.setVisible(true);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
 
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -70,7 +58,7 @@ public class Grid extends JFrame {
 
     private void initComponentss() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1080, 897);
+        setBounds(100, 100, 1080, 775);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -95,7 +83,7 @@ public class Grid extends JFrame {
 
         // User input panel
         JPanel panel = new JPanel();
-        panel.setBounds(790, 100, 200, 600);
+        panel.setBounds(790, 50, 200, 600);
         contentPane.add(panel);
         panel.setLayout(null);
 
@@ -163,7 +151,7 @@ public class Grid extends JFrame {
                 if (e.getSource() == button){
                     // Input by click on the button
                     String input = textContent.getText();
-                 //   System.out.println(input);
+                    //   System.out.println(input);
                     userInput = input;
                     checkInput = true;
                 }
@@ -235,49 +223,38 @@ public class Grid extends JFrame {
 
 
         for (int i = 0; i < panel_88.length; i++) {
-//            System.out.println("Outer Loop: " + panel_88.length +" " + i);
 
             switch (i) {
                 case 0:
-                    drawGrid (i, panel_88, 0, 15, panel1);
+                    drawGrid (i, panel_88, 0, 35, panel1);
                     break;
                 case 1:
-                    drawGrid (i, panel_88, 0, 115, panel2);
+                    drawGrid (i, panel_88, 0, 135, panel2);
                     break;
                 case 2:
-                    drawGrid (i, panel_88, 0, 215, panel3);
+                    drawGrid (i, panel_88, 0, 235, panel3);
                     break;
                 case 3:
-                    drawGrid (i, panel_88, 0, 315, panel4);
+                    drawGrid (i, panel_88, 0, 335, panel4);
                     break;
                 case 4:
-                    drawGrid (i, panel_88, 0, 415, panel5);
+                    drawGrid (i, panel_88, 0, 435, panel5);
                     break;
                 case 5:
-                    drawGrid (i, panel_88, 0, 515, panel6);
+                    drawGrid (i, panel_88, 0, 535, panel6);
                     break;
             }
-            // System.out.println();
         }
-        // System.out.println("Above are ID");
-
-//        for (int i = 0; i < id.length; i++) {
-//            for (int j = 0; j < id[i].length; j++) {
-//                System.out.print(id[i][j]);
-//            }
-//            System.out.println();
-//        }
 
     }
 
     // Draw necessary panel
     public void drawGrid (int i, JPanel panel_88[][], int panel88Value, int panelxValue, JPanel panel) {
-        panel.setBounds(panelxValue, 15, 100, 600);
+        panel.setBounds(panelxValue, 50, 100, 600);
         contentPane.add(panel);
         panel.setLayout(null);
 
         for (int j = 0; j < panel_88[i].length; j++) {
-//            System.out.print("InnerLoop: " + j);
             panel_88[i][j] = new JPanel();
             panel_88[i][j].setBackground(new Color(255, 255, 255));
             panel_88[i][j].setBorder(new LineBorder(new Color(0, 0, 0), 1));
@@ -292,7 +269,6 @@ public class Grid extends JFrame {
         myPicture.setImage();
         Image block = myPicture.getBlockImage().getScaledInstance(panel_88[i][j].getWidth(),panel_88[i][j].getHeight(),Image.SCALE_SMOOTH);
         JLabel picLabel = new JLabel(new ImageIcon(block));
-      //  System.out.println(myPicture.getID());
         id[i][j] = myPicture.getID();
         ImageBlock[i][j] = block;
         blockBlock[i][j] = myPicture;
@@ -317,7 +293,6 @@ public class Grid extends JFrame {
                         removeBlock(i, tempj);
                         addBlock(i, tempj, i, tempj-1);
                         id[i][tempj] = id[i][tempj-1];
-                        //      System.out.println("ID:["+i+"]"+"["+tempj+"] = "+ id[i][tempj]);
                         ImageBlock[i][tempj] = ImageBlock[i][tempj-1];
                         blockBlock[i][tempj] = blockBlock[i][tempj-1];
                         tempj--;
@@ -427,22 +402,5 @@ public class Grid extends JFrame {
         timerLabel.setText("" + timer.getTimeRemaining());
     }
 
-//    private void timer(JLabel timeLabel) {
-//        timer = new Timer(1000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (seconds >= 300) {
-//                    timeLabel.setFont(new Font("Arial", Font.PLAIN, 30));
-//                    timeLabel.setText("Time Over");
-//                    timer.stop();
-//                }
-//                else{
-//                    seconds++;
-//                    timeLabel.setText("" + seconds);
-//                }
-//
-//            }
-//        });
-//
-//    }
+
 }
