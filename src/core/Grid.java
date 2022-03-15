@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 // Needed to have a fixed dimension based on the game type
 // Num representing the Game
-// Based on the Game, Generating Different size of core.Grid
+// Based on the Game, Generating Different size of Grid
 // Bejeweled & Candy Crush are similar
 public class Grid extends JFrame {
 
@@ -36,7 +36,7 @@ public class Grid extends JFrame {
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {
 //                try {
-//                    core.Grid frame = new Grid();
+//                    Grid frame = new Grid();
 //                    frame.setVisible(true);
 //                } catch (Exception e) {
 //                    e.printStackTrace();
