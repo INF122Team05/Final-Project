@@ -18,7 +18,7 @@ public class Launcher {
         scoreMap.put(4,200);
         scoreMap.put(5,300);
         scoreMap.put(6,500);
-        Bejeweled game = new Bejeweled(new GameRules(10, "Bejeweled", scoreMap));
+        Bejeweled game = new Bejeweled(new GameRules(10, "bejeweled", scoreMap));
         game.start();
     }
 }
