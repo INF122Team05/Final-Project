@@ -1,3 +1,5 @@
+package core;
+
 import javax.swing.Timer;
 
 import java.util.Scanner;
