@@ -9,9 +9,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 
 // Needed to have a fixed dimension based on the game type
-// Num representing the core.Game
-// Based on the core.Game, Generating Different size of core.Grid
-// bejeweled.Bejeweled & Candy Crush are similar
+// Num representing the Game
+// Based on the Game, Generating Different size of core.Grid
+// Bejeweled & Candy Crush are similar
 public class Grid extends JFrame {
 
     // Global Variable
@@ -36,7 +36,7 @@ public class Grid extends JFrame {
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {
 //                try {
-//                    core.Grid frame = new core.Grid();
+//                    core.Grid frame = new Grid();
 //                    frame.setVisible(true);
 //                } catch (Exception e) {
 //                    e.printStackTrace();
@@ -75,7 +75,7 @@ public class Grid extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        JMenu mnNewMenu = new JMenu("Tile Matching core.Game");
+        JMenu mnNewMenu = new JMenu("Tile Matching Game");
         mnNewMenu.setFont(new Font("Sylfaen", Font.BOLD, 17));
         menuBar.add(mnNewMenu);
 
