@@ -60,7 +60,7 @@ public class Game {
     public boolean CheckVerticalMatch(Grid g)
     {
         boolean verticalMatch = false;
-        // Not sure if is needed, since the core.GameEngine already has the function to verify the move,
+        // Not sure if is needed, since the GameEngine already has the function to verify the move,
         // which might just call DeleteBlock() 
 
         Block[][] arr_b = g.blockBlock;       
@@ -89,7 +89,7 @@ public class Game {
    public boolean CheckHorizontalMatch(Grid g)
    {
        boolean horizaontalMatch = false;
-       // Not sure if is needed, since the core.GameEngine already has the function to verify the move,
+       // Not sure if is needed, since the GameEngine already has the function to verify the move,
        // which might just call DeleteBlock() 
 
        Block[][] arr_b = g.blockBlock;       

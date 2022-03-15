@@ -6,14 +6,16 @@ import java.util.ArrayList;
 public abstract class GameEngine extends Thread {
     private Grid grid;
     private GameRules rules;
+    private Game gameDetails;
 
     // These hold the temporary selections by the user
     private String selection;
 
-    public GameEngine(GameRules rules){
+    public GameEngine(GameRules rules, Game game){
         this.rules = rules;
         buildGame();
         selection = "";
+        gameDetails = game;
     }
 
     /** This method builds the GUI of the game **/
@@ -32,15 +34,15 @@ public abstract class GameEngine extends Thread {
             grid.removeBlock(coord.x, coord.y);
         }
         // Count score
-        System.out.println("That move had a total of " + coords.size() + " blocks");
-        System.out.println("Therefore, that equals " + rules.getScoreMap().get(coords.size()) + " points");
         var scoreToAdd = rules.getScoreMap().get(coords.size());
         if (scoreToAdd == null){
             System.out.println("No score value for this move, defaulting to 100 points");
             grid.updateScore(100);
         }
         else{
-            grid.updateScore(rules.getScoreMap().get(coords.size()));
+            int score = rules.getScoreMap().get(coords.size());
+            grid.updateScore(score);
+            System.out.print("Move made for " + score + " points");
         }
 
         grid.updateGrid();
@@ -92,20 +94,10 @@ public abstract class GameEngine extends Thread {
         if (longestMoveLeftRight.isEmpty() && longestMoveTopDown.isEmpty()){return null;}
         else {
             if (longestMoveLeftRight.size() > longestMoveTopDown.size()){
-                System.out.println("Blocks to move:");
-                for (Point p : longestMoveLeftRight){
-                    System.out.println("(" + p.x + ", " + p.y + ")");
-                }
-
                 longestMoveLeftRight.add(new Point(x,y));
                 return longestMoveLeftRight;
             }
             else{
-                System.out.println("Blocks to move:");
-                for (Point p : longestMoveTopDown){
-                    System.out.println("(" + p.x + ", " + p.y + ")");
-                }
-
                 longestMoveTopDown.add(new Point(x,y));
                 return longestMoveTopDown;
             }
@@ -195,7 +187,7 @@ public abstract class GameEngine extends Thread {
                     // User provides input: #,#,#,#
                     // Verify valid input
                     else if (checkAndMakeMove(grid.userInput)) {
-                        System.out.println("Move made");
+                        System.out.println("!");
                     }
                     else {
                         // Display error: Invalid move

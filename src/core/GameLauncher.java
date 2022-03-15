@@ -50,4 +50,6 @@ public class GameLauncher{
 
         return name;
     }
+
+    public GameManager getGameList(){return gameList;}
 }
